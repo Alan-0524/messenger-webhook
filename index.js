@@ -7,8 +7,8 @@ const
   app = express().use(bodyParser.json()); // creates express http server
   var PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
   var request = require('request');
-// Sets server port and logs message on success
-var port = (process.env.PORT || 1337);
+  // Sets server port and logs message on success
+  var port = (process.env.PORT || 1337);
 app.listen(port, () => console.log('webhook is listening'));
 
 // Creates the endpoint for our webhook 
@@ -33,11 +33,12 @@ app.post('/webhook', (req, res) => {
 	  
 	  // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
-      if (webhook_event.message) {
-        handleMessage(sender_psid, webhook_event.message);        
-      } else if (webhook_event.postback) {
-		handlePostback(sender_psid, webhook_event.postback);
-      }
+	  handlePostback(sender_psid, webhook_event.postback);
+      //if (webhook_event.message) {
+		//handlePostback(sender_psid, webhook_event.postback);              
+      //} else if (webhook_event.postback) {
+		//handleMessage(sender_psid, webhook_event.message);
+      //}
 	  
     });
 
@@ -53,7 +54,7 @@ app.post('/webhook', (req, res) => {
 app.get('/webhook', (req, res) => {
 
   // Your verify token. Should be a random string.
-  let VERIFY_TOKEN = "000000"
+  //let VERIFY_TOKEN = "000000"
     
   // Parse the query params
   let mode = req.query['hub.mode'];
@@ -64,7 +65,7 @@ app.get('/webhook', (req, res) => {
   if (mode && token) {
   
     // Checks the mode and token sent is correct
-    if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+    if (mode === 'subscribe' && token === PAGE_ACCESS_TOKEN) {
       
       // Responds with the challenge token from the request
       console.log('WEBHOOK_VERIFIED');
@@ -87,35 +88,7 @@ function handleMessage(sender_psid, received_message) {
     response = {
       "text": `You sent the message: "${received_message.text}". Now send me an image!`
     }
-  }else if (received_message.attachments) {
-    // Get the URL of the message attachment
-    let attachment_url = received_message.attachments[0].payload.url;
-    response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Is this the right picture?",
-            "subtitle": "Tap a button to answer.",
-            "image_url": attachment_url,
-            "buttons": [
-              {
-                "type": "postback",
-                "title": "Yes!",
-                "payload": "yes",
-              },
-              {
-                "type": "postback",
-                "title": "No!",
-                "payload": "no",
-              }
-            ],
-          }]
-        }
-      }
-    }
-  }   
+  }  
   
   // Sends the response message
   callSendAPI(sender_psid, response); 
@@ -129,11 +102,12 @@ function handlePostback(sender_psid, received_postback) {
   let payload = received_postback.payload;
 
   // Set the response based on the postback payload
-  if (payload === '0') {
-    response = { "text": "Thanks!" }
-  } else if (payload === '1') {
-    response = { "text": "Oops, try sending another image." }
-  }
+  response = { "text": "You sent the message: "payload". Now send me an image!" }
+  //if (payload === 'yes') {
+    //response = { "text": "Thanks!" }
+  //} else if (payload === 'no') {
+    //response = { "text": "Oops, try sending another image." }
+  //}
   // Send the message to acknowledge the postback
   //callSendAPI(sender_psid, response);
 }

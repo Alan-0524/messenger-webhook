@@ -38,7 +38,7 @@ app.post('/webhook', (req, res) => {
       } else if (webhook_event.postback) {
 		handlePostback(sender_psid, webhook_event.postback);
       } else if (webhook_event.quick_replies){
-		handlePostback(sender_psid, webhook_event.postback);
+		handleQuickReplies(sender_psid, webhook_event.quick_replies);
 	  }
 	  
     });
@@ -101,6 +101,23 @@ function handlePostback(sender_psid, received_postback) {
   
   // Get the payload for the postback
   let payload = received_postback.payload;
+
+  // Set the response based on the postback payload
+  response = { "text": "You sent the message: "${payload}"" }
+  //if (payload === 'yes') {
+    //response = { "text": "Thanks!" }
+  //} else if (payload === 'no') {
+    //response = { "text": "Oops, try sending another image." }
+  //}
+  // Send the message to acknowledge the postback
+  //callSendAPI(sender_psid, response);
+}
+
+function handleQuickReplies(sender_psid, quick_replies) {
+   let response;
+  
+  // Get the payload for the postback
+  let payload = quick_replies.payload;
 
   // Set the response based on the postback payload
   response = { "text": "You sent the message: "${payload}"" }

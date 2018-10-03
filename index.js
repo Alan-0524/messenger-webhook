@@ -120,7 +120,9 @@ function handleQuickReplies(sender_psid, quick_replies) {
   let payload = quick_replies.payload;
 
   // Set the response based on the postback payload
-  response = { "text": "You sent the message: "${payload.text}"" }
+  response = { 
+	"text": `You sent the message: "${payload.text}"` 
+	}
   callSendAPI(sender_psid, response); 
   //if (payload === 'yes') {
     //response = { "text": "Thanks!" }

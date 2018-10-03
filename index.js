@@ -35,11 +35,9 @@ app.post('/webhook', (req, res) => {
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
 		handleMessage(sender_psid, webhook_event.message);		              
-      } else if (webhook_event.postback) {
+      } else (webhook_event.postback) {
 		handlePostback(sender_psid, webhook_event.postback);
-      } else if (webhook_event.quick_replies){
-		handleQuickReplies(sender_psid, webhook_event.quick_replies);
-	  }
+      } 
 	  
     });
 
@@ -87,7 +85,7 @@ function handleMessage(sender_psid, received_message) {
   if (received_message.text) {    
     // Create the payload for a basic text message
     response = {
-      "text": `You sent the message: "${received_message.text}". Now send me an image!`
+      "text": "You sent the message: "${received_message.text}". Now send me an image!"
     }
   }  
   
@@ -98,40 +96,18 @@ function handleMessage(sender_psid, received_message) {
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
    let response;
-  
-  // Get the payload for the postback
-  let payload = received_postback.payload;
-
-  // Set the response based on the postback payload
-  //response = { "text": "You sent the message: "${payload.text}"" }
-  //if (payload === 'yes') {
-    //response = { "text": "Thanks!" }
-  //} else if (payload === 'no') {
-    //response = { "text": "Oops, try sending another image." }
-  //}
-  // Send the message to acknowledge the postback
-  //callSendAPI(sender_psid, response);
+   // Get the payload for the postback
+   let payload = received_postback.payload;
+   // Set the response based on the postback payload
+   if (payload === 'yes') {
+      response = { "text": "Thanks!" }
+   } else if (payload === 'no') {
+      response = { "text": "Oops, try sending another image." }
+   }
+   // Send the message to acknowledge the postback
+   callSendAPI(sender_psid, response);
 }
 
-function handleQuickReplies(sender_psid, quick_replies) {
-   let response;
-  
-  // Get the payload for the postback
-  let payload = quick_replies.payload;
-
-  // Set the response based on the postback payload
-  response = { 
-	"text": `You sent the message: "${payload.text}"` 
-	}
-  callSendAPI(sender_psid, response); 
-  //if (payload === 'yes') {
-    //response = { "text": "Thanks!" }
-  //} else if (payload === 'no') {
-    //response = { "text": "Oops, try sending another image." }
-  //}
-  // Send the message to acknowledge the postback
-  //callSendAPI(sender_psid, response);
-}
 
 // Sends response messages via the Send API
 function callSendAPI(sender_psid, response) {

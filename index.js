@@ -33,12 +33,13 @@ app.post('/webhook', (req, res) => {
 	  
 	  // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
-	  handlePostback(sender_psid, webhook_event.postback);
-      //if (webhook_event.message) {
-		//handlePostback(sender_psid, webhook_event.postback);              
-      //} else if (webhook_event.postback) {
-		//handleMessage(sender_psid, webhook_event.message);
-      //}
+      if (webhook_event.message) {
+		handleMessage(sender_psid, webhook_event.message);		              
+      } else if (webhook_event.postback) {
+		handlePostback(sender_psid, webhook_event.postback);
+      } else if (webhook_event.quick_replies){
+		handlePostback(sender_psid, webhook_event.postback);
+	  }
 	  
     });
 

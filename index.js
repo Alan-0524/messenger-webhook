@@ -103,7 +103,7 @@ function handlePostback(sender_psid, received_postback) {
   let payload = received_postback.payload;
 
   // Set the response based on the postback payload
-  //response = { "text": "You sent the message: "${payload}"" }
+  //response = { "text": "You sent the message: "${payload.text}"" }
   //if (payload === 'yes') {
     //response = { "text": "Thanks!" }
   //} else if (payload === 'no') {
@@ -120,7 +120,8 @@ function handleQuickReplies(sender_psid, quick_replies) {
   let payload = quick_replies.payload;
 
   // Set the response based on the postback payload
-  response = { "text": "You sent the message: "${payload}"" }
+  response = { "text": "You sent the message: "${payload.text}"" }
+  callSendAPI(sender_psid, response); 
   //if (payload === 'yes') {
     //response = { "text": "Thanks!" }
   //} else if (payload === 'no') {

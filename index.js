@@ -5,7 +5,7 @@ const
   express = require('express'),
   bodyParser = require('body-parser'),
   app = express().use(bodyParser.json()); // creates express http server
-  var PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN_2;
+  var PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
   var request = require('request');
   // Sets server port and logs message on success
   var port = (process.env.PORT || 1337);

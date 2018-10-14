@@ -99,16 +99,16 @@ function handleMessage(sender_psid, received_message) {
 		}else{
 			response = { "text": `System maintenance, please try again later.` }
 		}
-	    
+	     console.log(response);
+      // Sends the response message
+         callSendAPI(sender_psid, response); 
+         console.log("Send complete");
     } else {
       console.error("Unable to send message:" + err);
     }
   }); 
   }  
-  console.log(response);
-  // Sends the response message
-  callSendAPI(sender_psid, response); 
-  console.log("Send complete");
+  
 }
 
 // Handles messaging_postbacks events

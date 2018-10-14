@@ -87,10 +87,9 @@ function handleMessage(sender_psid, received_message) {
 	request({
     "uri": 'https://mymood-service.herokuapp.com/get_webhook/'+sender_psid+'/',
     "method": "GET"
-	}, (err, res, body) => {
+	}, (err, body) => {
     if (!err) {
-	  console.log("body--------------------"+body);
-      console.log("res.status---------------"+res.status);
+	  console.log("status--------------------"+body.status);
     } else {
       console.error("Unable to send message:" + err);
     }

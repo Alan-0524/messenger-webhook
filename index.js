@@ -93,11 +93,11 @@ function handleMessage(sender_psid, received_message) {
 		console.log(result);
 		var result_status = result["status"];
 		if(result_status==0){
-			response = { "text": "Please enter your full name." }
+			response = { "text": `Please enter your full name.` }
 		}else if(result_status==1){
-			response = { "text": "You're already in teams." }
+			response = { "text": `You're already in teams.` }
 		}else{
-			response = { "text": "System maintenance, please try again later." }
+			response = { "text": `System maintenance, please try again later.` }
 		}
 	    
     } else {

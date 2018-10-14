@@ -89,7 +89,7 @@ function handleMessage(sender_psid, received_message) {
     "method": "GET"
 	}, (err, body) => {
     if (!err) {
-	  console.log("status--------------------"+body[0]);
+	  console.log("status--------------------"+body["status"]);
     } else {
       console.error("Unable to send message:" + err);
     }

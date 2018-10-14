@@ -83,23 +83,18 @@ function handleMessage(sender_psid, received_message) {
   // Check if the message contains text
   if (received_message.text) {    
     // Create the payload for a basic text message
-	request('https://mymood-service.herokuapp.com/get_webhook/'+sender_psid+'/', function (error, response, body) {
+	
+	request({
+    "uri": 'https://mymood-service.herokuapp.com/get_webhook/'+sender_psid+'/',
+    "method": "GET",
+    "json": request_body
+	}, (err, res, body) => {
+    if (!err) {
       console.log(response.status)
-	  if (response.status == 0) {
-		response = {
-            "text": 'not exists'
-         }
-		}else if(response.status == 1) {
-				response = {
-				"text": 'exists'
-			}
-		}else{
-			response = {
-				"text": response
-			}
-		}
-	  
-    })
+    } else {
+      console.error("Unable to send message:" + err);
+    }
+  }); 
     
   }  
   

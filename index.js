@@ -105,8 +105,10 @@ function handleMessage(sender_psid, received_message) {
     }
   }); 
   }  
+  console.log(response);
   // Sends the response message
   callSendAPI(sender_psid, response); 
+  console.log("Send complete");
 }
 
 // Handles messaging_postbacks events

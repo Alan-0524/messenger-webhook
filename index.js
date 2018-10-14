@@ -90,7 +90,7 @@ function handleMessage(sender_psid, received_message) {
 	}, (err,res,body) => {
     if (!err) {
 		//var res = JSON.parse(body);
-	    console.log(body["status"]);
+	    console.log(body);
     } else {
       console.error("Unable to send message:" + err);
     }
